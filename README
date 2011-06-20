@@ -12,7 +12,7 @@ received via SIP. The initial User Interface can be loaded from a local HTML
 file or dowmloaded from a web server.
 
 Being a developer of a server-side SIP application (Kamailio SIP Server -
-http://www.kamailio.org), I found annoyng that any of SIP client-side
+http://www.kamailio.org), I found annoyng that SIP client-side
 applications look the same no matter what provider you use. From here poped up
 the idea of having a SIP client-side application that has the user interface
 easy to customize and update by provider itself.
@@ -20,12 +20,12 @@ easy to customize and update by provider itself.
 2. Description
 --------------
 
-Prctically Elsipo is an HTML viewer, based on QTWebKit, capable of loading
+Practically Elsipo is an HTML viewer, based on QTWebKit, capable of loading
 plugins. The first plugin implemented is named E_PJSIP, which add SIP
 communication support based on libpjsip.
 
 E_PJSIP plugin exports to Elsipo HTML viewer a new Javascript class named 'sip'
-that can be used to initiate SIP events, such as voice calls or instat
+that can be used to initiate SIP events, such as voice calls or instant
 messages. The plugin executes also Javascript callback functions when SIP
 events are coming from the network.
 
@@ -39,7 +39,7 @@ The code published is alpha stage at this time. I had the idea long time ago,
 but my main open source project kept me very busy. During last days I spent
 some time to update the code I had to latest QT and libpjsip versions, with
 the goal of making it public, under open source license, in order to see the
-interest in such idea and get new contributors.
+interest in this idea and get eventually new contributors.
 
 At this time, the application is able to:
 - register to a SIP server with authentication (username and password)
@@ -50,11 +50,13 @@ notifying the user through Javascript callback about incoming calls)
 - the core of Elsipo has support to handle the events related to voice calls,
 such as initiate call, get notified when a call comes in, answer the call,
 reject the call, terminate an active call
+- SIP presence is offered by pjsip library, getting it to Elsipo is a matter
+of JS API wrappers
 
 4. Installation
 ---------------
 
-Code was developed on Mac OS X, but it is with portable C++ code using QT
+Code was developed on Mac OS X, but it is with portable C++ using QT
 framework. Linux version will be ready soon, being a matter of Makefile
 dependencies.
 
