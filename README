@@ -1,0 +1,128 @@
+Elsipo SIP Browser - navigate the VoIP service via SIP
+======================================================
+
+Copyright 2011 - Daniel-Constantin Mierla
+License: GPLv2
+
+1. About
+--------
+
+Elsipo is a SIP (RFC3261) capable application that displays HTML content
+received via SIP. The initial User Interface can be loaded from a local HTML
+file or dowmloaded from a web server.
+
+Being a developer of a server-side SIP application (Kamailio SIP Server -
+http://www.kamailio.org), I found annoyng that any of SIP client-side
+applications look the same no matter what provider you use. From here poped up
+the idea of having a SIP client-side application that has the user interface
+easy to customize and update by provider itself.
+
+2. Description
+--------------
+
+Prctically Elsipo is an HTML viewer, based on QTWebKit, capable of loading
+plugins. The first plugin implemented is named E_PJSIP, which add SIP
+communication support based on libpjsip.
+
+E_PJSIP plugin exports to Elsipo HTML viewer a new Javascript class named 'sip'
+that can be used to initiate SIP events, such as voice calls or instat
+messages. The plugin executes also Javascript callback functions when SIP
+events are coming from the network.
+
+To some extent, you can call Elsipo a SIP softphone with User Interface (UI)
+implemented in HTML, CSS and Javascript.
+
+3. Status
+---------
+
+The code published is alpha stage at this time. I had the idea long time ago,
+but my main open source project kept me very busy. During last days I spent
+some time to update the code I had to latest QT and libpjsip versions, with
+the goal of making it public, under open source license, in order to see the
+interest in such idea and get new contributors.
+
+At this time, the application is able to:
+- register to a SIP server with authentication (username and password)
+- receive and send instant messaging
+- export to Javascript of function to initiate a call
+- automatically answer an incoming call (this to be changed shortly to
+notifying the user through Javascript callback about incoming calls)
+- the core of Elsipo has support to handle the events related to voice calls,
+such as initiate call, get notified when a call comes in, answer the call,
+reject the call, terminate an active call
+
+4. Installation
+---------------
+
+Code was developed on Mac OS X, but it is with portable C++ code using QT
+framework. Linux version will be ready soon, being a matter of Makefile
+dependencies.
+
+To compile Elsipo you need pjsip library installed, see http://www.pjsip.org
+for more details. Also the QT development framework has to be installed.
+
+If you have QT Creator, you can open src/elsipo-group.pro in it and build it
+there. Also, you can type 'make' command in a terminal when you are in 'src/'
+sub-folder.
+
+The Elsipo application will be built in 'src/bin/' folder and you can run it
+from there. Until it gets to a beta state, it is recommended you run it from
+sources folder.
+
+5. Configuration
+----------------
+
+Elsipo expects the configuration file in user home directory
+'.elsipo/elsipo.ini'. A sample content:
+
+    [Elsipo]
+    url=file:///home/test/.elsipo/elsipo-ui/index.html
+
+    [Plugin.Pjsip]
+    username=test
+    password=abc
+    domain=sipserver.com
+    port=5060
+
+The 'url' parameter in [Elsipo] group is the link to User Interface, in this
+example pointing to a local HTML file. It can be a web link as well.
+
+The group [Plugin.Pjsip] holds the attributes to connect to SIP server, such
+as SIP username and password, server's domain and port.
+
+6. User Interface
+-----------------
+
+I created a small HTML page with CSS and basic Javascript callback, mainly for
+demo purposes. It is located in 'etc/ui/elsipo-ui'.
+
+Besides classic SIP registration, voice calls and instant messaging, this UI
+will display inside INFO box the content of MESSAGE requests coming from
+user 'id-i_infotext'. Actually the Javascript callback for MESSAGE requests
+will update the HTML element having the id the rest of the string after 'id-',
+at this moment the UI has a <div id='i_infotext'></div> element.
+
+7. Contributions
+----------------
+
+The project was started for this purpose. I am a server side application
+developer, coding mainly in C. If you like the idea and you are familiar with
+one of following technologies: C++, HTML, CSS, Javascript or SIP/VOIP, come
+on board. I defintely can help with C/C++ and SIP/VoIP parts, help to UI and
+Javascript is really demanded.
+
+Think about what you could be achieved:
+- when you start using the VoIP provider X, the whole interface will be pulled
+from provider, giving you the directory to access the voice mail, audio
+conference server, current rates/offers, a.s.o.
+- personalized feeling of UI per provider and user
+- self-done extensions to UI by just writing HTML/CSS/Javascript
+
+Isn't it cool? Come on board and contribute.
+
+8. Contact
+----------
+
+Write me any opinion you have about this project, of course, also when you
+want to become contributor, at: <miconda [at] gmail.com> or via GITHub
+portal.
