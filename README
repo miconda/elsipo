@@ -67,9 +67,9 @@ If you have QT Creator, you can open src/elsipo-group.pro in it and build it
 there. Also, you can type 'make' command in a terminal when you are in 'src/'
 sub-folder.
 
-The Elsipo application will be built in 'src/bin/' folder and you can run it
-from there. Until it gets to a beta state, it is recommended you run it from
-sources folder.
+The Elsipo application will be built in 'src/elsipo/bin/' folder and you can
+run it from there. Until it gets to a beta state, it is recommended you run
+it from sources folder.
 
 5. Configuration
 ----------------
