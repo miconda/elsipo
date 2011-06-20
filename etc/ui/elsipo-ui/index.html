@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en"><head>
+	<title>Elsipo - the SIP browser</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="author" content="Asipto">
+	<meta name="keywords" content="sip voip softphone browser">
+	<meta name="description" content="">
+	<link rel="stylesheet" type="text/css" href="css/elsipo.css">
+	<script type="text/javascript" src="js/elsipo.js"></script>
+</head>
+<body>
+	<div align="center">
+	<h2>Elsipo - the SIP browser</h2>
+	<form action="">
+		<fieldset class="login">
+			<legend>Registration</legend>
+			<div>
+				<p id="p_register" for="b_register">You are offline</p> 
+			</div>
+			<div>
+				<input id="b_register" name="b_register" type="button" class="a_button"
+						value="Click to register" onClick="sipjs_do_registration()">
+			</div>
+		</fieldset>
+		<fieldset class="contact">
+			<legend>Call</legend>
+			<div>
+				<input id="i_address" name="address" type="text" class="i_text"
+						value="Type the address to dial..." onfocus="this.value=''; this.onfocus=null;" >
+			</div>
+			<div>
+				<input id="b_action" name="action" type="button" class="a_button" value="Dial"
+					onClick="sipjs_do_call()">
+				<input id="b_reset" name="reset" type="button" class="i_button" value="Reset">
+			</div>
+		</fieldset>
+		<fieldset class="contact">
+			<legend>Instant Messaging</legend>
+			<div>
+				<textarea id="i_imdata" name="imdata" rows="5" cols="30"></textarea>
+			</div>
+			<div>
+				<textarea id="i_imtext" name="imtext" rows="2" cols="30"
+					 onfocus="this.value=''; this.onfocus=null;">Type the text to send...</textarea>
+			</div>
+			<div>
+				<input id="i_imaddress" name="imaddress" type="text" class="i_text"
+						value="Type the address to send IM..." onfocus="this.value=''; this.onfocus=null;" >
+				<input id="b_sendim" name="sendim" type="button" class="a_button" value="Send"
+					onClick="sipjs_send_message()">
+			</div>
+		</fieldset>
+		<fieldset class="contact">
+			<legend>Info</legend>
+			<div id="i_infotext">
+				...
+			</div>
+		</fieldset>
+	</form>
+	</div>
+</body></html>
