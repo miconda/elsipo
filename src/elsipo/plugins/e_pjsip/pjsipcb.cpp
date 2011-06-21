@@ -29,7 +29,9 @@ void PjsipCB::on_message_request(pjsua_call_id call_id, const pj_str_t *from,
     PJ_UNUSED_ARG(call_id);
     PJ_UNUSED_ARG(to);
     PJ_UNUSED_ARG(contact);
-
+    qDebug() << "received SIP MESSAGE request ["
+                << QString::fromAscii(from->ptr,from->slen)
+                << "] [" << QString::fromAscii(text->ptr, text->slen) << "]";
     emit signal_on_message_request(QString::fromAscii(from->ptr,from->slen),
                 QString::fromAscii(mime_type->ptr, mime_type->slen),
                     QString::fromAscii(text->ptr, text->slen));
@@ -39,7 +41,7 @@ void PjsipCB::on_message_request(pjsua_call_id call_id, const pj_str_t *from,
 void PjsipCB::static_on_message_request(pjsua_call_id call_id, const pj_str_t *from,
                 const pj_str_t *to, const pj_str_t *contact, const pj_str_t *mime_type,
                 const pj_str_t *text) {
-    qDebug() << "received SIP MESSAGE request";
+
     if (globalPjsipCB) {
             PjsipCB *myCb = (PjsipCB*) globalPjsipCB;
             myCb->on_message_request(call_id, from, to, contact, mime_type, text);
