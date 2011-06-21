@@ -21,8 +21,8 @@ function sipcb_register_failed() {
 	//alert("user unregistered");
 }
 
-function sipcb_alert() {
-	alert("Sent from Elsipo framework");
+function sipcb_alert(text) {
+	alert("By Elsipo: " + text);
 }
 
 function sipjs_parse_sip_uri(strURI) {
@@ -55,7 +55,7 @@ function sipjs_get_user_domid(strID) {
 }
 
 function sipcb_message(from, ctype, body) {
-	//alert("new text message from " + from);
+	//alert("new text message from [" + from + "] [" + body + "]");
 	uri = sipjs_parse_sip_uri(from);
 
 	docid = sipjs_get_user_domid(uri.user);
@@ -105,4 +105,8 @@ function sipjs_send_message() {
 	{
 		alert("Error while sending the IM to " + uri);
 	}
+}
+
+function sipjs_send_xquery(uri, text) {
+	sip.sendIM(uri, text);
 }
