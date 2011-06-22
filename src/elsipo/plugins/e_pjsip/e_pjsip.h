@@ -37,6 +37,9 @@ public slots:
     int doSIPRegistration();
     int getSIPRegistrationStatus();
     int doCall(QString uri);
+    int doCallAnswer();
+    int doCallReject();
+    int doCallHangup();
     int sendIM(QString uri, QString msg);
     int registerJSCallback(QString event, QString jsf);
 

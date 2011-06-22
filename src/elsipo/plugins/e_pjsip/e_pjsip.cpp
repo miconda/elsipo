@@ -36,7 +36,12 @@ Pjsip::Pjsip(QObject *parent) : QObject(parent)
                      this, SLOT(slot_on_message_request(QString,QString,QString)), Qt::QueuedConnection);
     QObject::connect((PjsipCB*)globalPjsipCB, SIGNAL(signal_on_message_request_status(QString,int,QString)),
                      this, SLOT(slot_on_message_request_status(QString,int,QString)), Qt::QueuedConnection);
-
+    QObject::connect((PjsipCB*)globalPjsipCB, SIGNAL(signal_on_incoming_call(int,int,QString)),
+                     this, SLOT(slot_on_incoming_call(int,int,QString)), Qt::QueuedConnection);
+    QObject::connect((PjsipCB*)globalPjsipCB, SIGNAL(signal_on_call_state(int,QString)),
+                     this, SLOT(slot_on_call_state(int,QString)), Qt::QueuedConnection);
+    QObject::connect((PjsipCB*)globalPjsipCB, SIGNAL(signal_on_call_media_state(int)),
+                     this, SLOT(slot_on_call_media_state(int)), Qt::QueuedConnection);
 }
 
 Pjsip::~Pjsip()
@@ -372,7 +377,9 @@ void Pjsip::slot_on_incoming_call(int rcv_acc_id, int call_id, QString from)
     /* Automatically answer incoming calls with 200/OK */
     activePjCall = 1;
     activePjCallID = call_id;
-    pjsua_call_answer(call_id, 200, NULL, NULL);
+    webView->page()->mainFrame()->evaluateJavaScript(QString("sipcb_call_in(\"%1\");null").arg(escapeJavascriptString(from)));
+
+    // pjsua_call_answer(call_id, 200, NULL, NULL);
 }
 
 /* Callback called by the library when call's state has changed */
@@ -389,12 +396,18 @@ void Pjsip::slot_on_call_state(int call_id, QString state)
     status = pjsua_call_get_info(call_id, &ci);
     if (status != PJ_SUCCESS) {
         qDebug() << "error fetching info for call: " << QString::number(call_id);
+        if(state=="DISCONNCTD") {
+            activePjCall = 0;
+            activePjCallID = 0;
+            webView->page()->mainFrame()->evaluateJavaScript(QString("sipcb_call_ended();null"));
+        }
         return;
     }
     switch(ci.state) {
     case PJSIP_INV_STATE_DISCONNECTED:
         activePjCall = 0;
         activePjCallID = 0;
+        webView->page()->mainFrame()->evaluateJavaScript(QString("sipcb_call_ended();null"));
         break;
     default:
         ;
@@ -438,6 +451,34 @@ int Pjsip::doCall(QString uri)
         activePjCall = 1;
         activePjCallID = call_id;
         // set button ("hang up");
+    }
+    return 0;
+}
+
+int Pjsip::doCallAnswer()
+{
+    if(activePjCall == 1) {
+        pjsua_call_answer(activePjCallID, 200, NULL, NULL);
+    }
+    return 0;
+}
+
+int Pjsip::doCallReject()
+{
+    if(activePjCall == 1) {
+        pjsua_call_hangup(activePjCallID, 486, NULL, NULL);
+        activePjCall = 0;
+        activePjCallID = 0;
+    }
+    return 0;
+}
+
+int Pjsip::doCallHangup()
+{
+    if(activePjCall == 1) {
+        pjsua_call_hangup(activePjCallID, 0, NULL, NULL);
+        activePjCall = 0;
+        activePjCallID = 0;
     }
     return 0;
 }
