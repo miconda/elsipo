@@ -88,9 +88,48 @@ function sipjs_do_registration() {
 }
 
 function sipjs_do_call() {
+	var action = document.getElementById('b_action').value;
+	if(action=="Dial") {
+		var uri = document.getElementById('i_address').value;
+		if(sip.doCall(uri)<0) {
+			alert("Failed calling to: " + uri);
+			return;
+		}
+
+		document.getElementById('b_action').disabled=true;
+		document.getElementById('b_action').value="Calling...";
+		document.getElementById('b_reset').disabled=false;
+		document.getElementById('b_reset').value="Hang Up";
+		return;
+	}
+	
+	if(action=="Answer") {
+		if(sip.doCallAnswer()<0) {
+			document.getElementById('b_action').disabled=false;
+			document.getElementById('b_action').value="Dial";
+			document.getElementById('b_reset').disabled=true;
+			document.getElementById('b_reset').value="...";
+			document.getElementById('i_address').value = "Type the address to dial...";
+
+			alert("Failed to answer the call");
+			return;
+		}
+		document.getElementById('b_action').disabled=true;
+		document.getElementById('b_action').value="Answered...";
+		document.getElementById('b_reset').disabled=false;
+		document.getElementById('b_reset').value="Hang Up";
+	}
+}
+
+function sipjs_do_call_reject() {
 	var uri = document.getElementById('i_address').value;
-	if(sip.doCall(uri)<0) {
-		alert("Failed calling to: " + uri);
+	document.getElementById('b_action').disabled=false;
+	document.getElementById('b_action').value="Dial";
+	document.getElementById('b_reset').disabled=true;
+	document.getElementById('b_reset').value="...";
+	document.getElementById('i_address').value = "Type the address to dial...";
+	if(sip.doCallReject()<0) {
+		alert("Failed ending the call");
 	}
 }
 
@@ -109,4 +148,22 @@ function sipjs_send_message() {
 
 function sipjs_send_xquery(uri, text) {
 	sip.sendIM(uri, text);
+}
+
+
+function sipcb_call_in(uri) {
+	alert("Incoming call from: " + uri);
+	document.getElementById('b_action').disabled=false;
+	document.getElementById('b_action').value="Answer";
+	document.getElementById('b_reset').disabled=false;
+	document.getElementById('b_reset').value="Hang Up";
+	document.getElementById('i_address').value = "Call from: " + uri;
+}
+
+function sipcb_call_ended() {
+	document.getElementById('b_action').disabled=false;
+	document.getElementById('b_action').value="Dial";
+	document.getElementById('b_reset').disabled=true;
+	document.getElementById('b_reset').value="...";
+	document.getElementById('i_address').value = "Type the address to dial...";
 }

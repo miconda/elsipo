@@ -31,7 +31,8 @@
 			<div>
 				<input id="b_action" name="action" type="button" class="a_button" value="Dial"
 					onClick="sipjs_do_call()">
-				<input id="b_reset" name="reset" type="button" class="i_button" value="Reset">
+				<input id="b_reset" name="reset" type="button" class="i_button" value="..."
+						onClick="sipjs_do_call_reject()" disabled>
 			</div>
 		</fieldset>
 		<fieldset class="contact">
