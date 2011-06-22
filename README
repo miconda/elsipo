@@ -45,11 +45,12 @@ At this time, the application is able to:
 - register to a SIP server with authentication (username and password)
 - receive and send instant messaging
 - export to Javascript of function to initiate a call
-- automatically answer an incoming call (this to be changed shortly to
-notifying the user through Javascript callback about incoming calls)
+- popup dialog (alert) when a call comes in (no audio alert)
 - the core of Elsipo has support to handle the events related to voice calls,
 such as initiate call, get notified when a call comes in, answer the call,
 reject the call, terminate an active call
+- addresses (to dial to or send IM to) have to be given as full SIP URI
+(e.g., sip:username@domain.com)
 - SIP presence is offered by pjsip library, getting it to Elsipo is a matter
 of JS API wrappers
 
