@@ -11,6 +11,8 @@
 #include "e_pjsip.h"
 
 #include <iostream>
+#include <resolv.h>
+#include <arpa/inet.h>
 using namespace std;
 
 #define THIS_FILE	"ELSIPO-PJSIP"
@@ -104,6 +106,22 @@ int Pjsip::init(QObject *parent)
         cfg.cb.on_reg_state = &PjsipCB::static_on_reg_state;
         cfg.cb.on_pager = &PjsipCB::static_on_message_request;
         cfg.cb.on_pager_status = &PjsipCB::static_on_message_request_status;
+        cfg.nameserver_count = 0;
+
+        /* Add DNS servers from OS */
+        if ((_res.options & RES_INIT) == 0) res_init();
+
+        int i;
+        for (i = 0; i<_res.nscount; i++)
+        {
+            cfg.nameserver[cfg.nameserver_count++] = pj_str(strdup(inet_ntoa(_res.nsaddr_list[i].sin_addr)));
+        }
+
+        if (cfg.nameserver_count == 0) {
+            // list is empty, add Google public DNS as last resort
+            const char *google_dns = "8.8.8.8";
+            cfg.nameserver[cfg.nameserver_count++] = pj_str( (char*) google_dns );
+        }
 
         pjsua_logging_config_default(&log_cfg);
         log_cfg.console_level = 4;
