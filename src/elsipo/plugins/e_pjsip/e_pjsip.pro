@@ -10,28 +10,29 @@ SOURCES         = e_pjsip.cpp \
     pjsipcb.cpp
 TARGET          = $$qtLibraryTarget(e_pjsip)
 DESTDIR         = ../../bin/plugins/e_pjsip
-macx-g++:LIBS += -lg7221codec-i386-apple-darwin10.7.0 \
-    -lgsmcodec-i386-apple-darwin10.7.0 \
-    -lilbccodec-i386-apple-darwin10.7.0 \
-    -lmilenage-i386-apple-darwin10.7.0 \
-    -lpj-i386-apple-darwin10.7.0 \
-    -lpjlib-util-i386-apple-darwin10.7.0 \
-    -lpjmedia-audiodev-i386-apple-darwin10.7.0 \
-    -lpjmedia-codec-i386-apple-darwin10.7.0 \
-    -lpjmedia-i386-apple-darwin10.7.0 \
-    -lpjnath-i386-apple-darwin10.7.0 \
-    -lpjsip-i386-apple-darwin10.7.0 \
-    -lpjsip-simple-i386-apple-darwin10.7.0 \
-    -lpjsip-ua-i386-apple-darwin10.7.0 \
-    -lpjsua-i386-apple-darwin10.7.0 \
-    -lportaudio-i386-apple-darwin10.7.0 \
-    -lresample-i386-apple-darwin10.7.0 \
-    -lspeex-i386-apple-darwin10.7.0 \
-    -lsrtp-i386-apple-darwin10.7.0 \
+macx-g++:LIBS += -lg7221codec-i386-apple-darwin10.8.0 \
+    -lgsmcodec-i386-apple-darwin10.8.0 \
+    -lilbccodec-i386-apple-darwin10.8.0 \
+    -lmilenage-i386-apple-darwin10.8.0 \
+    -lpj-i386-apple-darwin10.8.0 \
+    -lpjlib-util-i386-apple-darwin10.8.0 \
+    -lpjmedia-audiodev-i386-apple-darwin10.8.0 \
+    -lpjmedia-codec-i386-apple-darwin10.8.0 \
+    -lpjmedia-i386-apple-darwin10.8.0 \
+    -lpjnath-i386-apple-darwin10.8.0 \
+    -lpjsip-i386-apple-darwin10.8.0 \
+    -lpjsip-simple-i386-apple-darwin10.8.0 \
+    -lpjsip-ua-i386-apple-darwin10.8.0 \
+    -lpjsua-i386-apple-darwin10.8.0 \
+    -lportaudio-i386-apple-darwin10.8.0 \
+    -lresample-i386-apple-darwin10.8.0 \
+    -lspeex-i386-apple-darwin10.8.0 \
+    -lsrtp-i386-apple-darwin10.8.0 \
     -lm \
     -lpthread \
     -lssl \
     -lcrypto \
+    -lresolv \
     -framework CoreAudio \
     -framework AudioToolbox \
     -framework AudioUnit \
