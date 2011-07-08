@@ -6,6 +6,7 @@ SOURCES    = elsipo.cpp \
              main.cpp
 
 TARGET     = elsipo
+CONFIG -= debug
 win32 {
     CONFIG(debug, release|debug):DESTDIR = ../bin/debug/
     CONFIG(release, release|debug):DESTDIR = ../bin/release/
