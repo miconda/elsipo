@@ -1,7 +1,10 @@
 #! [0]
 TEMPLATE    = subdirs
 SUBDIRS	    = elsipo \
+              plugins/e_echo \
               plugins/e_pjsip
+CONFIG -= DEBUG
+CONFIG -= debug
 #! [0]
 
 # install
