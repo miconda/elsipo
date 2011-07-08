@@ -41,6 +41,7 @@
 #include <QtGui>
 #include <QtWebKit>
 #include <QDir>
+#include <QDebug>
 
 #include "elsipo.h"
 
@@ -59,7 +60,7 @@ ElsipoWindow::ElsipoWindow()
     iniSettings->beginGroup("Elsipo");
     QString startUrl = iniSettings->value("url").toString();
     iniSettings->endGroup();
-    // QMessageBox::information(this, "Info", "Start Url is: " + startUrl);
+    qDebug() << "Start Url is: " << startUrl;
 
     if (!loadPlugins()) {
         QMessageBox::information(this, "Error", "Could not load the plugin");
@@ -90,23 +91,32 @@ int ElsipoWindow::loadPlugins()
     QFileInfoList list = pluginsDir.entryInfoList();
     for (int iList=0;iList<list.count();iList++)
     {
-      QFileInfo info = list[iList];
-      if (info.isDir() && info.fileName()!=".." && info.fileName()!=".")
-      {
-        QDir pgDir(info.absoluteFilePath());
-        foreach (QString fileName, pgDir.entryList(QDir::Files | QDir::NoSymLinks)) {
-          QPluginLoader pluginLoader(pgDir.absoluteFilePath(fileName), this);
-          QObject *plugin = pluginLoader.instance();
-          if (plugin) {
-            ElsipoInterface* pluginInterface = qobject_cast<ElsipoInterface *>(plugin);
-            if (pluginInterface) {
-                pluginInterface->init();
-                pluginsList.append(pluginInterface);
-                pluginsNo++;
+        QFileInfo info = list[iList];
+        if (info.isDir() && info.fileName()!=".." && info.fileName()!=".")
+        {
+            QDir pgDir(info.absoluteFilePath());
+            foreach (QString fileName, pgDir.entryList(QDir::Files | QDir::NoSymLinks)) {
+                qDebug() << "attempting to load plugin: " << pgDir.absoluteFilePath(fileName);
+                QPluginLoader pluginLoader(pgDir.absoluteFilePath(fileName), this);
+                qDebug() << "attempting to instance plugin: " << pgDir.absoluteFilePath(fileName);
+                QObject *plugin = pluginLoader.instance();
+                if (plugin) {
+                    qDebug() << "casting plugin: " << pgDir.absoluteFilePath(fileName);
+                    ElsipoInterface* pluginInterface = qobject_cast<ElsipoInterface *>(plugin);
+                    if (pluginInterface) {
+                        qDebug() << "loaded plugin: " << pgDir.absoluteFilePath(fileName);
+                        pluginInterface->init();
+                        pluginsList.append(pluginInterface);
+                        pluginsNo++;
+                    } else {
+                        qDebug() << "failed casting plugin: " << pgDir.absoluteFilePath(fileName);
+                    }
+                } else {
+                    qDebug() << "failed to instance plugin: " << pgDir.absoluteFilePath(fileName)
+                            << " [[error: " << pluginLoader.errorString() << "]]";
+                }
             }
-         }
-       }
-      }
+        }
     }
 
     return pluginsNo;
