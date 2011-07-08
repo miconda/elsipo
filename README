@@ -58,8 +58,11 @@ of JS API wrappers
 ---------------
 
 Code was developed on Mac OS X, but it is with portable C++ using QT
-framework. Linux version will be ready soon, being a matter of Makefile
-dependencies.
+framework.
+
+Linux version was tested on Ubuntu 10.04 32b. You would need to adapt the .pro
+file for e_pjsip plugin to set the proper path and names for pjsip libs when
+you compile it for other Linux OSes.
 
 To compile Elsipo you need pjsip library installed, see http://www.pjsip.org
 for more details. Also the QT development framework has to be installed.
