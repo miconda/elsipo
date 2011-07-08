@@ -2,6 +2,7 @@
 QT      +=  webkit network
 TEMPLATE        = lib
 CONFIG         += e_pjsip
+CONFIG -= debug
 INCLUDEPATH    += ../../elsipo /usr/local/include
 HEADERS         = e_pjsip.h \
     pjsipcb.h
@@ -36,6 +37,29 @@ macx-g++:LIBS += -lg7221codec-i386-apple-darwin10.7.0 \
     -framework AudioUnit \
     -framework CoreFoundation \
     -framework CoreServices
+
+linux-g++:LIBS += -L/usr/local/lib \
+    -lpjsua-i686-pc-linux-gnu \
+    -lpjsip-ua-i686-pc-linux-gnu \
+    -lpjsip-simple-i686-pc-linux-gnu \
+    -lpjsip-i686-pc-linux-gnu \
+    -lpjmedia-codec-i686-pc-linux-gnu \
+    -lpjmedia-i686-pc-linux-gnu \
+    -lpjmedia-audiodev-i686-pc-linux-gnu \
+    -lpjnath-i686-pc-linux-gnu \
+    -lpjlib-util-i686-pc-linux-gnu \
+    -lresample-i686-pc-linux-gnu \
+    -lmilenage-i686-pc-linux-gnu \
+    -lsrtp-i686-pc-linux-gnu \
+    -lgsmcodec-i686-pc-linux-gnu \
+    -lspeex-i686-pc-linux-gnu \
+    -lilbccodec-i686-pc-linux-gnu \
+    -lg7221codec-i686-pc-linux-gnu \
+    -lportaudio-i686-pc-linux-gnu \
+    -lpj-i686-pc-linux-gnu \
+    -lm -lnsl -lrt -lpthread  -lcrypto -lssl
+
+#    -lasound -luuid
 
 #! [0]
 
