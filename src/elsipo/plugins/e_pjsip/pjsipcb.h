@@ -4,7 +4,7 @@
 #include <QObject>
 
 extern "C" {
-	#include <pjsua-lib/pjsua.h>
+    #include <pjsua-lib/pjsua.h>
 }
 
 class PjsipCB : public QObject {
