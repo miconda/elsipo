@@ -68,8 +68,15 @@ To compile Elsipo you need pjsip library installed, see http://www.pjsip.org
 for more details. Also the QT development framework has to be installed.
 
 If you have QT Creator, you can open src/elsipo-group.pro in it and build it
-there. Also, you can type 'make' command in a terminal when you are in 'src/'
-sub-folder.
+there. Also, you can type 'make' command in a terminal when you are in
+'elsipo/src/elsipo' sub-folder.
+
+When using the 'make' command, be sure you generate the Makefiles for you
+platform, in folder 'elsipo/src/elsipo', run the command:
+
+    qmake -makefile -recursive elsipo-group.pro
+
+Command 'qmake' is part of QT toolkit (on Debian packaged as qt4-qmake).
 
 The Elsipo application will be built in 'src/elsipo/bin/' folder and you can
 run it from there. Until it gets to a beta state, it is recommended you run
